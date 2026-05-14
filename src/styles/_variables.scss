@@ -1,0 +1,56 @@
+// Colors
+$color-primary: #3b5bdb;
+$color-primary-hover: #2f4ac4;
+$color-danger: #e03131;
+$color-danger-hover: #c92a2a;
+$color-success: #2f9e44;
+$color-text: #1a1a2e;
+$color-text-muted: #6c757d;
+$color-border: #dee2e6;
+$color-surface: #ffffff;
+$color-background: #f8f9fa;
+$color-focus: #4263eb;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+
+// Border radius
+$border-radius-sm: 4px;
+$border-radius: 8px;
+$border-radius-lg: 12px;
+
+// Shadows
+$shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+$shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+$shadow-dialog: 0 20px 60px rgba(0, 0, 0, 0.2);
+
+// Typography
+$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+$font-size-3xl: 2rem;
+$line-height-base: 1.5;
+
+// Transitions
+$transition-fast: 150ms ease;
+$transition-base: 250ms ease;
+
+// Breakpoints
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+
+// Z-indices
+$z-dropdown: 100;
+$z-header: 200;
+$z-dialog-backdrop: 1000;
+$z-dialog: 1001;

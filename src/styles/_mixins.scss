@@ -1,0 +1,33 @@
+@use 'variables' as *;
+
+@mixin breakpoint($size) {
+  @if $size == sm {
+    @media (min-width: $bp-sm) { @content; }
+  } @else if $size == md {
+    @media (min-width: $bp-md) { @content; }
+  } @else if $size == lg {
+    @media (min-width: $bp-lg) { @content; }
+  } @else if $size == xl {
+    @media (min-width: $bp-xl) { @content; }
+  }
+}
+
+@mixin focus-ring {
+  outline: 2px solid $color-focus;
+  outline-offset: 2px;
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin card-hover {
+  transition: box-shadow $transition-fast, transform $transition-fast;
+
+  &:hover {
+    box-shadow: $shadow-elevated;
+    transform: translateY(-2px);
+  }
+}

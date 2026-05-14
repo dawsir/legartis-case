@@ -1,0 +1,58 @@
+@use 'variables' as *;
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-dialog-backdrop;
+  padding: $spacing-md;
+  animation: backdrop-in $transition-fast;
+}
+
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.dialog {
+  background: $color-surface;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-dialog;
+  padding: $spacing-xl;
+  width: 100%;
+  max-width: 440px;
+  z-index: $z-dialog;
+  animation: dialog-in $transition-fast;
+
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: 600;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__message {
+    color: $color-text-muted;
+    margin-bottom: $spacing-xl;
+    line-height: 1.6;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-sm;
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
