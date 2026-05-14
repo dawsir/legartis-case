@@ -3,7 +3,8 @@
 .dialog-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(16, 24, 40, 0.45);
+  backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,6 +20,7 @@
 
 .dialog {
   background: $color-surface;
+  border: 1px solid $color-border;
   border-radius: $border-radius-lg;
   box-shadow: $shadow-dialog;
   padding: $spacing-xl;
@@ -30,6 +32,7 @@
   &__title {
     font-size: $font-size-xl;
     font-weight: 600;
+    color: $color-text;
     margin-bottom: $spacing-sm;
   }
 

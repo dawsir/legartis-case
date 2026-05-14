@@ -26,7 +26,7 @@ import { AssignBooksPanelComponent } from '../../components/assign-books-panel/a
           <a [routerLink]="['/collections', collection().id, 'edit']" class="btn btn--secondary">
             Edit
           </a>
-          <button class="btn btn--danger" type="button" (click)="openDeleteDialog()">Delete</button>
+          <button class="btn btn--danger-soft" type="button" (click)="openDeleteDialog()">Delete</button>
         </div>
       </div>
 
@@ -61,7 +61,7 @@ import { AssignBooksPanelComponent } from '../../components/assign-books-panel/a
     }
 
     .collection-detail__description {
-      color: #6c757d;
+      color: #475467;
       margin-bottom: 24px;
       max-width: 720px;
       line-height: 1.6;
@@ -77,7 +77,7 @@ import { AssignBooksPanelComponent } from '../../components/assign-books-panel/a
 
     .meta-list dt {
       font-weight: 500;
-      color: #6c757d;
+      color: #475467;
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

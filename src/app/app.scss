@@ -30,9 +30,9 @@
   position: sticky;
   top: 0;
   z-index: $z-header;
-  background: $color-surface;
-  border-bottom: 1px solid $color-border;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+  background: $color-header-bg;
+  border-bottom: 1px solid $color-header-border;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.06);
 
   &__inner {
     display: flex;
@@ -97,8 +97,8 @@
       }
 
       &.is-active {
-        color: $color-primary;
-        background: rgba(240, 165, 0, 0.1);
+        color: $color-primary-soft-text;
+        background: $color-primary-soft;
       }
     }
   }

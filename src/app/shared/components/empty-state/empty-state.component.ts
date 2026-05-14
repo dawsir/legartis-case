@@ -6,13 +6,18 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
   template: `
     <div class="empty-state">
       <div class="empty-state__icon" aria-hidden="true">
-        <img [src]="image()" [alt]="message()" class="empty-state__image">
+        <img [src]="image()" alt="" class="empty-state__image">
       </div>
+      @if (title()) {
+        <h2 class="empty-state__title">{{ title() }}</h2>
+      }
       <p class="empty-state__message">{{ message() }}</p>
       @if (actionLabel()) {
-        <button class="btn btn--primary" type="button" (click)="action.emit()">
-          {{ actionLabel() }}
-        </button>
+        <div class="empty-state__actions">
+          <button class="btn btn--primary" type="button" (click)="action.emit()">
+            {{ actionLabel() }}
+          </button>
+        </div>
       }
     </div>
   `,
@@ -22,6 +27,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmptyStateComponent {
+  title = input<string>('');
   message = input<string>('No items found.');
   actionLabel = input<string>('');
   image = input<string>('/empty.png');

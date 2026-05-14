@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: center;
   gap: $spacing-xs;
+  min-height: 40px;
   padding: $spacing-sm $spacing-md;
   border: 1px solid transparent;
   border-radius: $border-radius-sm;
@@ -14,7 +15,8 @@
   line-height: 1.5;
   cursor: pointer;
   text-decoration: none;
-  transition: background $transition-fast, color $transition-fast, border-color $transition-fast, box-shadow $transition-fast;
+  transition: background $transition-fast, color $transition-fast,
+              border-color $transition-fast, box-shadow $transition-fast;
   white-space: nowrap;
   user-select: none;
 
@@ -22,10 +24,14 @@
     @include focus-ring;
   }
 
-  &:disabled {
-    opacity: 0.5;
+  &:disabled,
+  &[aria-disabled='true'] {
+    background: $color-disabled-bg !important;
+    color: $color-disabled-text !important;
+    border-color: $color-disabled-border !important;
     cursor: not-allowed;
     pointer-events: none;
+    box-shadow: none;
   }
 
   &--primary {
@@ -42,11 +48,11 @@
   &--secondary {
     background: $color-surface;
     color: $color-text;
-    border-color: $color-border;
+    border-color: $color-border-strong;
 
     &:hover:not(:disabled) {
       background: $color-surface-hover;
-      border-color: $color-border;
+      border-color: $color-border-strong;
     }
   }
 
@@ -61,18 +67,30 @@
     }
   }
 
+  &--danger-soft {
+    background: $color-danger-soft;
+    color: $color-danger-soft-text;
+    border-color: $color-danger-soft-border;
+
+    &:hover:not(:disabled) {
+      background: $color-danger-soft-hover;
+      border-color: $color-danger-soft-border;
+    }
+  }
+
   &--ghost {
     background: transparent;
     color: $color-text-muted;
     border-color: transparent;
 
     &:hover:not(:disabled) {
-      background: $color-surface;
+      background: $color-surface-hover;
       color: $color-text;
     }
   }
 
   &--sm {
+    min-height: 32px;
     padding: $spacing-xs $spacing-sm;
     font-size: $font-size-sm;
   }

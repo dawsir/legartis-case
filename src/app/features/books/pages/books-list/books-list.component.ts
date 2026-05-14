@@ -137,11 +137,15 @@ const SORT_OPTIONS: SortOption[] = [
         <app-error-message [message]="error()!" (retry)="onRetry()" />
       } @else if (isEmpty()) {
         @if (noResults()) {
-          <app-empty-state message="No books match your filters." />
+          <app-empty-state
+            title="No books match your filters"
+            message="Try changing the search, genre, year, or collection filter."
+          />
         } @else {
           <app-empty-state
-            message="No books yet."
-            actionLabel="Add your first book"
+            title="No books yet"
+            message="Add your first book to get started."
+            actionLabel="Add book"
             (action)="onAddFirst()"
           />
         }
@@ -198,7 +202,7 @@ const SORT_OPTIONS: SortOption[] = [
 
     .books-list__count {
       font-size: 0.875rem;
-      color: #6c757d;
+      color: #475467;
       margin-bottom: 16px;
     }
   `,

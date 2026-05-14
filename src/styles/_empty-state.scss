@@ -6,20 +6,23 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: $spacing-xxl $spacing-lg;
+  padding: $spacing-xl $spacing-lg;
   color: $color-text-muted;
 
   &__icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto $spacing-md;
+    margin: 0 auto $spacing-lg;
   }
 
   &__image {
-    width: 250px;
+    width: 180px;
     height: auto;
-    opacity: 0.9;
+
+    @media (min-width: $bp-md) {
+      width: 220px;
+    }
   }
 
   &__title {
@@ -32,8 +35,15 @@
   &__message {
     font-size: $font-size-base;
     color: $color-text-muted;
-    max-width: 400px;
-    margin-bottom: $spacing-lg;
+    max-width: 420px;
+    margin: 0 auto $spacing-lg;
     line-height: 1.6;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 }

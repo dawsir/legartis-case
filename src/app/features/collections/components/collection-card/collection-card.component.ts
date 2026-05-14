@@ -8,7 +8,7 @@ import { TruncatePipe } from '../../../../shared/pipes/truncate.pipe';
   standalone: true,
   imports: [RouterLink, TruncatePipe],
   template: `
-    <article class="card collection-card">
+    <article class="card card--interactive collection-card">
       <div class="card__header">
         <h2 class="card__title">
           <a [routerLink]="['/collections', collection().id]" class="card__title-link">
@@ -28,7 +28,7 @@ import { TruncatePipe } from '../../../../shared/pipes/truncate.pipe';
         <a [routerLink]="['/collections', collection().id]" class="btn btn--secondary">View</a>
         <a [routerLink]="['/collections', collection().id, 'edit']" class="btn btn--secondary">Edit</a>
         <button
-          class="btn btn--danger"
+          class="btn btn--danger-soft btn--sm"
           type="button"
           (click)="deleteRequested.emit(collection().id)"
         >
@@ -55,7 +55,7 @@ import { TruncatePipe } from '../../../../shared/pipes/truncate.pipe';
 
     .card__description--empty {
       font-style: italic;
-      color: #6c757d;
+      color: #475467;
     }
 
     .card__actions {

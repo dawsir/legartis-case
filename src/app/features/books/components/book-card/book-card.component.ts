@@ -8,7 +8,7 @@ import { TruncatePipe } from '../../../../shared/pipes/truncate.pipe';
   standalone: true,
   imports: [RouterLink, TruncatePipe],
   template: `
-    <article class="card book-card">
+    <article class="card card--interactive book-card">
       <div class="card__header">
         <h2 class="card__title">
           <a [routerLink]="['/books', book().id]" class="book-card__title-link">
@@ -34,7 +34,7 @@ import { TruncatePipe } from '../../../../shared/pipes/truncate.pipe';
         <a [routerLink]="['/books', book().id]" class="btn btn--secondary">View</a>
         <a [routerLink]="['/books', book().id, 'edit']" class="btn btn--secondary">Edit</a>
         <button
-          class="btn btn--danger"
+          class="btn btn--danger-soft btn--sm"
           type="button"
           (click)="deleteRequested.emit(book().id)"
         >
@@ -61,7 +61,7 @@ import { TruncatePipe } from '../../../../shared/pipes/truncate.pipe';
 
     .book-card__author {
       font-size: 0.875rem;
-      color: #6c757d;
+      color: #475467;
       margin-bottom: 8px;
     }
 

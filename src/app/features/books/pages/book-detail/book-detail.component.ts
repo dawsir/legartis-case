@@ -27,7 +27,7 @@ import { AssignCollectionsPanelComponent } from '../../components/assign-collect
         </div>
         <div class="page-header__actions">
           <a [routerLink]="['/books', book().id, 'edit']" class="btn btn--secondary">Edit</a>
-          <button class="btn btn--danger" type="button" (click)="openDeleteDialog()">Delete</button>
+          <button class="btn btn--danger-soft" type="button" (click)="openDeleteDialog()">Delete</button>
         </div>
       </div>
 
@@ -77,12 +77,12 @@ import { AssignCollectionsPanelComponent } from '../../components/assign-collect
 
     .book-detail__author {
       font-size: 1.125rem;
-      color: #6c757d;
+      color: #475467;
       margin-top: 4px;
     }
 
     .book-detail__description {
-      color: #1a1a2e;
+      color: #101828;
       line-height: 1.7;
       margin-bottom: 32px;
       max-width: 680px;
@@ -96,9 +96,9 @@ import { AssignCollectionsPanelComponent } from '../../components/assign-collect
     }
 
     .book-detail__meta {
-      background: #f8f9fa;
-      border: 1px solid #dee2e6;
-      border-radius: 8px;
+      background: #f9fafb;
+      border: 1px solid #e4e7ec;
+      border-radius: 10px;
       padding: 24px;
       align-self: start;
     }
@@ -112,7 +112,7 @@ import { AssignCollectionsPanelComponent } from '../../components/assign-collect
 
     .meta-list dt {
       font-weight: 500;
-      color: #6c757d;
+      color: #475467;
     }
 
     @media (max-width: 768px) {

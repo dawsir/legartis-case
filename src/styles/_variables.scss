@@ -1,19 +1,55 @@
-// Colors
-$color-primary: #f0a500;
-$color-primary-hover: #d4901a;
-$color-on-primary: #1a1020;
-$color-danger: #e03131;
-$color-danger-hover: #c92a2a;
-$color-success: #2f9e44;
-$color-text: #e8d9c0;
-$color-text-muted: #7a6b52;
-$color-border: #211f35;
-$color-surface: #141228;
-$color-surface-hover: #1c1a33;
-$color-background: #0c0b18;
-$color-focus: #f0a500;
+// === Surfaces ===
+$color-background: #f7f8fa;
+$color-surface: #ffffff;
+$color-surface-raised: #ffffff;
+$color-surface-soft: #f3f4f7;
+$color-surface-hover: #f1f3f7;
+$color-surface-sunken: #f9fafb;
 
-// Spacing
+// === Borders ===
+$color-border: #e4e7ec;
+$color-border-strong: #d0d5dd;
+$color-border-subtle: #eef0f3;
+
+// === Text ===
+$color-text: #101828;
+$color-text-muted: #475467;
+$color-text-subtle: #667085;
+$color-text-placeholder: #98a2b3;
+
+// === Brand (warm amber) ===
+$color-primary: #b45309;
+$color-primary-hover: #92400e;
+$color-primary-soft: #fef3c7;
+$color-primary-soft-text: #92400e;
+$color-on-primary: #ffffff;
+$color-focus: #d97706;
+
+// === Status ===
+$color-danger: #d92d20;
+$color-danger-hover: #b42318;
+$color-danger-soft: #fef3f2;
+$color-danger-soft-text: #b42318;
+$color-danger-soft-border: #fecdca;
+$color-danger-soft-hover: #fee4e2;
+
+$color-success: #027a48;
+$color-success-soft: #ecfdf3;
+$color-success-soft-text: #027a48;
+
+$color-warning-soft: #fffaeb;
+$color-warning-soft-text: #b54708;
+
+// === Disabled ===
+$color-disabled-bg: #f2f4f7;
+$color-disabled-text: #98a2b3;
+$color-disabled-border: #eaecf0;
+
+// === Header ===
+$color-header-bg: #ffffff;
+$color-header-border: #e4e7ec;
+
+// === Spacing ===
 $spacing-xs: 4px;
 $spacing-sm: 8px;
 $spacing-md: 16px;
@@ -21,17 +57,17 @@ $spacing-lg: 24px;
 $spacing-xl: 32px;
 $spacing-xxl: 48px;
 
-// Border radius
-$border-radius-sm: 4px;
-$border-radius: 8px;
-$border-radius-lg: 12px;
+// === Radius ===
+$border-radius-sm: 6px;
+$border-radius: 10px;
+$border-radius-lg: 14px;
 
-// Shadows
-$shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4);
-$shadow-elevated: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(240, 165, 0, 0.12);
-$shadow-dialog: 0 20px 60px rgba(0, 0, 0, 0.8);
+// === Shadows ===
+$shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
+$shadow-elevated: 0 4px 8px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.05);
+$shadow-dialog: 0 20px 24px -4px rgba(16, 24, 40, 0.10), 0 8px 8px -4px rgba(16, 24, 40, 0.04);
 
-// Typography
+// === Typography ===
 $font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 $font-size-sm: 0.875rem;
 $font-size-base: 1rem;
@@ -41,17 +77,17 @@ $font-size-2xl: 1.5rem;
 $font-size-3xl: 2rem;
 $line-height-base: 1.5;
 
-// Transitions
+// === Transitions ===
 $transition-fast: 150ms ease;
 $transition-base: 250ms ease;
 
-// Breakpoints
+// === Breakpoints ===
 $bp-sm: 480px;
 $bp-md: 768px;
 $bp-lg: 1024px;
 $bp-xl: 1280px;
 
-// Z-indices
+// === Z-indices ===
 $z-dropdown: 100;
 $z-header: 200;
 $z-dialog-backdrop: 1000;

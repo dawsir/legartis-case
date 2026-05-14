@@ -71,11 +71,15 @@ const SORT_OPTIONS: SortOption[] = [
         <app-error-message [message]="error()!" (retry)="onRetry()" />
       } @else if (isEmpty()) {
         @if (noResults()) {
-          <app-empty-state message="No collections match your search." />
+          <app-empty-state
+            title="No collections found"
+            message="No collections match your search. Try a different term or clear the search."
+          />
         } @else {
           <app-empty-state
-            message="No collections yet."
-            actionLabel="Create your first collection"
+            title="No collections yet"
+            message="Create your first collection to start organizing your books."
+            actionLabel="New collection"
             (action)="onCreateFirst()"
           />
         }

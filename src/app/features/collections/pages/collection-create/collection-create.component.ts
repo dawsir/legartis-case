@@ -32,14 +32,6 @@ import { CreateCollectionPayload } from '../../../../shared/models/book-collecti
       padding-top: 32px;
       padding-bottom: 48px;
     }
-
-    .form-card {
-      max-width: 640px;
-      background: #fff;
-      border: 1px solid #dee2e6;
-      border-radius: 8px;
-      padding: 32px;
-    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

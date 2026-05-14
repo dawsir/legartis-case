@@ -32,14 +32,6 @@ import { CreateBookPayload } from '../../../../shared/models/book.model';
       padding-top: 32px;
       padding-bottom: 48px;
     }
-
-    .form-card {
-      max-width: 720px;
-      background: #fff;
-      border: 1px solid #dee2e6;
-      border-radius: 8px;
-      padding: 32px;
-    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

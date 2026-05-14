@@ -13,7 +13,11 @@
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); t=d['projects'][list\\(d['projects'].keys\\(\\)\\)[0]]['architect'].get\\('test',{}\\); print\\(json.dumps\\(t,indent=2\\)\\)\")",
       "Bash(node -e \"const a=require\\('./angular.json'\\); const proj=Object.keys\\(a.projects\\)[0]; console.log\\(JSON.stringify\\(a.projects[proj].architect.test,null,2\\)\\)\")",
       "Bash(Get-ChildItem -Path \"d:\\\\Work\\\\legartis-case-1\\\\src\" -Recurse -Filter \"*.scss\")",
-      "Bash(Select-Object -ExpandProperty FullName)"
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Get-ChildItem -Path \"d:\\\\Work\\\\legartis-case-1\\\\src\" -Recurse -Directory)",
+      "Bash(Select-Object FullName)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(dir \"d:\\\\Work\\\\legartis-case-1\\\\src\")"
     ]
   }
 }

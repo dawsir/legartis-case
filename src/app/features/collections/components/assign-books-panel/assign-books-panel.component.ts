@@ -108,7 +108,7 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
     }
 
     .assign-panel__section--add {
-      border-top: 1px solid #dee2e6;
+      border-top: 1px solid #e4e7ec;
       padding-top: 24px;
     }
 
@@ -126,7 +126,7 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
 
     .assign-panel__count {
       font-weight: 400;
-      color: #6c757d;
+      color: #475467;
       font-size: 0.875rem;
     }
 
@@ -142,7 +142,7 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
     .assign-panel__all-added,
     .assign-panel__no-results {
       font-size: 0.875rem;
-      color: #6c757d;
+      color: #475467;
       font-style: italic;
     }
 
@@ -160,9 +160,9 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
       align-items: center;
       gap: 12px;
       padding: 10px 14px;
-      border: 1px solid #dee2e6;
+      border: 1px solid #e4e7ec;
       border-radius: 6px;
-      background: #fff;
+      background: #ffffff;
     }
 
     .assign-list__info {
@@ -186,7 +186,7 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
 
     .assign-list__meta {
       font-size: 0.8125rem;
-      color: #6c757d;
+      color: #475467;
     }
 
     .btn--sm {
