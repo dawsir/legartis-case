@@ -122,8 +122,6 @@ export class BooksEffects {
     ),
   );
 
-  // Called by CollectionsEffects after a collection is deleted to keep books consistent.
-  // Not triggered from UI directly; exported so collections effects can dispatch without an action round-trip.
   static toUpdatePayload(
     book: Book,
     overrides: Partial<UpdateBookPayload> = {},
@@ -139,7 +137,6 @@ export class BooksEffects {
     return BooksEffects.toUpdatePayload(book, overrides);
   }
 
-  // Called by CollectionsEffects — updates multiple books after a collection is deleted
   static buildBulkUpdate(api: BooksApiService, books: Book[], deletedCollectionId: string) {
     const affected = books.filter((b) => b.collectionIds.includes(deletedCollectionId));
     if (!affected.length) return EMPTY;

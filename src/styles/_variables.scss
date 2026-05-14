@@ -63,12 +63,19 @@ $border-radius: 10px;
 $border-radius-lg: 14px;
 
 // === Shadows ===
-$shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
-$shadow-elevated: 0 4px 8px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.05);
-$shadow-dialog: 0 20px 24px -4px rgba(16, 24, 40, 0.10), 0 8px 8px -4px rgba(16, 24, 40, 0.04);
+$shadow-card:
+  0 1px 2px rgba(16, 24, 40, 0.04),
+  0 1px 3px rgba(16, 24, 40, 0.06);
+$shadow-elevated:
+  0 4px 8px -2px rgba(16, 24, 40, 0.08),
+  0 2px 4px -2px rgba(16, 24, 40, 0.05);
+$shadow-dialog:
+  0 20px 24px -4px rgba(16, 24, 40, 0.1),
+  0 8px 8px -4px rgba(16, 24, 40, 0.04);
 
 // === Typography ===
-$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-base:
+  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 $font-size-sm: 0.875rem;
 $font-size-base: 1rem;
 $font-size-lg: 1.125rem;
