@@ -37,6 +37,13 @@
   gap: $spacing-sm;
   margin-bottom: $spacing-lg;
   align-items: flex-end;
+
+  // At mobile widths, filter controls expand to fill available space
+  @media (max-width: #{$bp-sm}) {
+    > * {
+      flex: 1 1 100%;
+    }
+  }
 }
 
 .grid {

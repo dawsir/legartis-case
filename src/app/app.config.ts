@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, isDevMode, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { provideStore } from '@ngrx/store';
@@ -16,7 +16,7 @@ import { CollectionsEffects } from './features/collections/state/collections.eff
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes, withComponentInputBinding()),
+    provideRouter(routes, withComponentInputBinding(), withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })),
     provideHttpClient(),
     importProvidersFrom(
       HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {

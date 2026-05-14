@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'mixins' as *;
 
 body {
   font-family: $font-family-base;
@@ -44,6 +45,11 @@ p {
   &:last-child {
     margin-bottom: 0;
   }
+}
+
+a:focus-visible {
+  @include focus-ring;
+  border-radius: 2px;
 }
 
 .text-muted {
