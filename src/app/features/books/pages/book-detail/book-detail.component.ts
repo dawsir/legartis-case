@@ -1,26 +1,21 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   inject,
   input,
-  OnInit,
   signal,
 } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map, switchMap } from 'rxjs';
 import { Book } from '../../../../shared/models/book.model';
 import { BooksFacade } from '../../state/books.facade';
-import { CollectionsFacade } from '../../../collections/state/collections.facade';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
+import { AssignCollectionsPanelComponent } from '../../components/assign-collections-panel/assign-collections-panel.component';
 
 @Component({
   selector: 'app-book-detail',
   standalone: true,
-  imports: [RouterLink, DatePipe, ConfirmDialogComponent, EmptyStateComponent],
+  imports: [RouterLink, DatePipe, ConfirmDialogComponent, AssignCollectionsPanelComponent],
   template: `
     <div class="container page-content">
       <a class="back-link" routerLink="/books">← All books</a>
@@ -42,31 +37,7 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
             <p class="book-detail__description">{{ book().description }}</p>
           }
 
-          <section class="section">
-            <div class="section__header">
-              <h2 class="section__title">Collections ({{ collectionsCount() }})</h2>
-              <a routerLink="/collections" class="btn btn--secondary btn--sm">
-                Browse collections
-              </a>
-            </div>
-
-            @if (assignedCollections().length === 0) {
-              <app-empty-state message="Not assigned to any collection." />
-            } @else {
-              <ul class="collection-list">
-                @for (c of assignedCollections(); track c.id) {
-                  <li class="collection-list__item">
-                    <a [routerLink]="['/collections', c.id]" class="collection-list__name">
-                      {{ c.name }}
-                    </a>
-                    @if (c.description) {
-                      <span class="collection-list__desc">{{ c.description }}</span>
-                    }
-                  </li>
-                }
-              </ul>
-            }
-          </section>
+          <app-assign-collections-panel [bookId]="book().id" />
         </div>
 
         <aside class="book-detail__meta">
@@ -117,6 +88,13 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
       max-width: 680px;
     }
 
+    .detail-layout {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 48px;
+      align-items: start;
+    }
+
     .book-detail__meta {
       background: #f8f9fa;
       border: 1px solid #dee2e6;
@@ -137,71 +115,20 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
       color: #6c757d;
     }
 
-    .collection-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .collection-list__item {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      padding: 12px 16px;
-      border: 1px solid #dee2e6;
-      border-radius: 8px;
-      background: #fff;
-    }
-
-    .collection-list__name {
-      font-weight: 500;
-      color: inherit;
-      text-decoration: none;
-
-      &:hover { text-decoration: underline; }
-    }
-
-    .collection-list__desc {
-      font-size: 0.8125rem;
-      color: #6c757d;
-    }
-
-    .btn--sm {
-      font-size: 0.875rem;
-      padding: 6px 14px;
+    @media (max-width: 768px) {
+      .detail-layout {
+        grid-template-columns: 1fr;
+      }
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BookDetailComponent implements OnInit {
+export class BookDetailComponent {
   private readonly facade = inject(BooksFacade);
-  private readonly collectionsFacade = inject(CollectionsFacade);
-  private readonly route = inject(ActivatedRoute);
 
   book = input.required<Book>();
 
-  private readonly id$ = this.route.paramMap.pipe(map(p => p.get('id')!));
-
-  readonly bookFromStore = toSignal(
-    this.id$.pipe(switchMap(id => this.facade.getById(id))),
-  );
-
-  readonly allCollections = toSignal(this.collectionsFacade.allCollections$, { initialValue: [] });
-
-  readonly assignedCollections = computed(() => {
-    const b = this.bookFromStore() ?? this.book();
-    return this.allCollections().filter(c => b.collectionIds.includes(c.id));
-  });
-
-  readonly collectionsCount = computed(() => this.assignedCollections().length);
   readonly isDeleteDialogOpen = signal(false);
-
-  ngOnInit(): void {
-    this.collectionsFacade.loadAll();
-  }
 
   openDeleteDialog(): void {
     this.isDeleteDialogOpen.set(true);

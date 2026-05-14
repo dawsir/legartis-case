@@ -1,27 +1,21 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   inject,
   input,
-  OnInit,
   signal,
 } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map, switchMap } from 'rxjs';
 import { BookCollection } from '../../../../shared/models/book-collection.model';
 import { CollectionsFacade } from '../../state/collections.facade';
-import { BooksFacade } from '../../../books/state/books.facade';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
-import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
+import { AssignBooksPanelComponent } from '../../components/assign-books-panel/assign-books-panel.component';
 
 @Component({
   selector: 'app-collection-detail',
   standalone: true,
-  imports: [RouterLink, DatePipe, ConfirmDialogComponent, EmptyStateComponent, LoadingSpinnerComponent],
+  imports: [RouterLink, DatePipe, ConfirmDialogComponent, AssignBooksPanelComponent],
   template: `
     <div class="container page-content">
       <a class="back-link" routerLink="/collections">← All collections</a>
@@ -41,36 +35,13 @@ import { LoadingSpinnerComponent } from '../../../../shared/components/loading-s
       }
 
       <dl class="meta-list">
-        <dt>Books</dt>
-        <dd>{{ booksCount() }}</dd>
         <dt>Created</dt>
         <dd>{{ collection().createdAt | date: 'mediumDate' }}</dd>
         <dt>Last updated</dt>
         <dd>{{ collection().updatedAt | date: 'mediumDate' }}</dd>
       </dl>
 
-      <section class="section">
-        <div class="section__header">
-          <h2 class="section__title">Books in this collection ({{ booksCount() }})</h2>
-          <a routerLink="/books" class="btn btn--secondary btn--sm">Browse all books</a>
-        </div>
-
-        @if (booksLoading()) {
-          <app-loading-spinner label="Loading books…" />
-        } @else if (noBooksInCollection()) {
-          <app-empty-state message="No books in this collection yet." />
-        } @else {
-          <ul class="book-list">
-            @for (book of books(); track book.id) {
-              <li class="book-list__item">
-                <a [routerLink]="['/books', book.id]" class="book-list__title">{{ book.title }}</a>
-                <span class="book-list__meta">{{ book.author }} · {{ book.year }}</span>
-                <span class="badge badge--muted">{{ book.genre }}</span>
-              </li>
-            }
-          </ul>
-        }
-      </section>
+      <app-assign-books-panel [collectionId]="collection().id" />
 
       <app-confirm-dialog
         [isOpen]="isDeleteDialogOpen()"
@@ -108,75 +79,15 @@ import { LoadingSpinnerComponent } from '../../../../shared/components/loading-s
       font-weight: 500;
       color: #6c757d;
     }
-
-    .book-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .book-list__item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border: 1px solid #dee2e6;
-      border-radius: 8px;
-      background: #fff;
-    }
-
-    .book-list__title {
-      font-weight: 500;
-      flex: 1;
-      color: inherit;
-      text-decoration: none;
-
-      &:hover { text-decoration: underline; }
-    }
-
-    .book-list__meta {
-      font-size: 0.875rem;
-      color: #6c757d;
-    }
-
-    .btn--sm {
-      font-size: 0.875rem;
-      padding: 6px 14px;
-    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CollectionDetailComponent implements OnInit {
+export class CollectionDetailComponent {
   private readonly facade = inject(CollectionsFacade);
-  private readonly booksFacade = inject(BooksFacade);
-  private readonly route = inject(ActivatedRoute);
 
   collection = input.required<BookCollection>();
 
-  private readonly id$ = this.route.paramMap.pipe(map(p => p.get('id')!));
-
-  readonly viewModel = toSignal(
-    this.id$.pipe(switchMap(id => this.facade.getViewModelById(id))),
-  );
-
-  readonly books = toSignal(
-    this.id$.pipe(switchMap(id => this.booksFacade.getBooksForCollection(id))),
-    { initialValue: [] },
-  );
-
-  readonly booksLoading = toSignal(this.booksFacade.loading$, { initialValue: false });
-
-  readonly booksCount = computed(() => this.viewModel()?.booksCount ?? 0);
-  readonly noBooksInCollection = computed(() => !this.booksLoading() && this.books().length === 0);
-
   readonly isDeleteDialogOpen = signal(false);
-
-  ngOnInit(): void {
-    this.booksFacade.loadAll();
-  }
 
   openDeleteDialog(): void {
     this.isDeleteDialogOpen.set(true);

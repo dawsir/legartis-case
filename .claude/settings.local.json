@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "PowerShell(npm install angular-in-memory-web-api 2>&1)",
-      "Bash(npx ng *)"
+      "Bash(npx ng *)",
+      "Bash(Get-ChildItem \"d:\\\\Work\\\\legartis-case-1\\\\src\\\\app\")",
+      "Bash(Select-Object Name)"
     ]
   }
 }
