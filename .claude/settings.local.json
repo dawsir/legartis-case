@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(npm install angular-in-memory-web-api 2>&1)"
+      "PowerShell(npm install angular-in-memory-web-api 2>&1)",
+      "Bash(npx ng *)"
     ]
   }
 }
