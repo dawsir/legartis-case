@@ -12,6 +12,8 @@ import { BooksFacade } from '../../state/books.facade';
 import { CollectionsFacade } from '../../../collections/state/collections.facade';
 import { BookCardComponent } from '../../components/book-card/book-card.component';
 import { SearchInputComponent } from '../../../../shared/components/search-input/search-input.component';
+import { FilterNumberInputComponent } from '../../../../shared/components/filter-number-input/filter-number-input.component';
+import { FilterSelectComponent } from '../../../../shared/components/filter-select/filter-select.component';
 import {
   SortOption,
   SortSelectComponent,
@@ -39,6 +41,8 @@ const SORT_OPTIONS: SortOption[] = [
     RouterLink,
     BookCardComponent,
     SearchInputComponent,
+    FilterNumberInputComponent,
+    FilterSelectComponent,
     SortSelectComponent,
     LoadingSpinnerComponent,
     EmptyStateComponent,
@@ -63,59 +67,47 @@ const SORT_OPTIONS: SortOption[] = [
           (searchChanged)="onSearch($event)"
         />
 
-        <div class="filter-field">
-          <label class="filter-field__label" for="genre-filter">Genre</label>
-          <select
-            id="genre-filter"
-            class="filter-field__select"
-            [value]="filter().genre ?? ''"
-            (change)="onGenreChange($event)"
-          >
-            <option value="">All genres</option>
-            @for (opt of genreOptions; track opt.value) {
-              <option [value]="opt.value">{{ opt.label }}</option>
-            }
-          </select>
+        <app-filter-select
+          label="Genre"
+          inputId="genre-filter"
+          [value]="filter().genre ?? ''"
+          [options]="genreOptions"
+          defaultLabel="All genres"
+          (valueChanged)="onGenreChange($event)"
+        />
+
+        <div class="filter-year-group">
+          <div class="filter-year-group__fields">
+            <app-filter-number-input
+              label="Year from"
+              inputId="year-from"
+              placeholder="e.g. 1900"
+              [value]="filter().yearFrom"
+              [hasError]="yearRangeError() !== null"
+              (valueChanged)="onYearFromChange($event)"
+            />
+            <app-filter-number-input
+              label="Year to"
+              inputId="year-to"
+              placeholder="e.g. 2024"
+              [value]="filter().yearTo"
+              [hasError]="yearRangeError() !== null"
+              (valueChanged)="onYearToChange($event)"
+            />
+          </div>
+          @if (yearRangeError()) {
+            <span class="filter-year-group__error">{{ yearRangeError() }}</span>
+          }
         </div>
 
-        <div class="filter-field filter-field--narrow">
-          <label class="filter-field__label" for="year-from">Year from</label>
-          <input
-            id="year-from"
-            type="number"
-            class="filter-field__input"
-            [value]="filter().yearFrom ?? ''"
-            placeholder="e.g. 1900"
-            (change)="onYearFromChange($event)"
-          />
-        </div>
-
-        <div class="filter-field filter-field--narrow">
-          <label class="filter-field__label" for="year-to">Year to</label>
-          <input
-            id="year-to"
-            type="number"
-            class="filter-field__input"
-            [value]="filter().yearTo ?? ''"
-            placeholder="e.g. 2024"
-            (change)="onYearToChange($event)"
-          />
-        </div>
-
-        <div class="filter-field">
-          <label class="filter-field__label" for="collection-filter">Collection</label>
-          <select
-            id="collection-filter"
-            class="filter-field__select"
-            [value]="filter().collectionId ?? ''"
-            (change)="onCollectionChange($event)"
-          >
-            <option value="">All collections</option>
-            @for (c of allCollections(); track c.id) {
-              <option [value]="c.id">{{ c.name }}</option>
-            }
-          </select>
-        </div>
+        <app-filter-select
+          label="Collection"
+          inputId="collection-filter"
+          [value]="filter().collectionId ?? ''"
+          [options]="collectionOptions()"
+          defaultLabel="All collections"
+          (valueChanged)="onCollectionChange($event)"
+        />
 
         <app-sort-select
           [options]="sortOptions"
@@ -179,25 +171,21 @@ const SORT_OPTIONS: SortOption[] = [
       align-items: flex-end;
     }
 
-    .filter-field {
+    .filter-year-group {
       display: flex;
       flex-direction: column;
       gap: 4px;
-      min-width: 140px;
     }
 
-    .filter-field--narrow {
-      min-width: 110px;
+    .filter-year-group__fields {
+      display: flex;
+      gap: 8px;
     }
 
-    .filter-field__label {
-      font-size: 0.875rem;
-      font-weight: 500;
-    }
-
-    .filter-field__select,
-    .filter-field__input {
-      width: 100%;
+    .filter-year-group__error {
+      font-size: 0.75rem;
+      color: #d92d20;
+      white-space: nowrap;
     }
 
     .books-list__count {
@@ -214,7 +202,7 @@ export class BooksListComponent implements OnInit {
   private readonly router = inject(Router);
 
   readonly sortOptions = SORT_OPTIONS;
-  readonly genreOptions = BOOK_GENRE_OPTIONS;
+  readonly genreOptions = BOOK_GENRE_OPTIONS as Array<{ value: string; label: string }>;
 
   readonly books = toSignal(this.facade.books$, { initialValue: [] });
   readonly allBooks = toSignal(this.facade.allBooks$, { initialValue: [] });
@@ -224,8 +212,19 @@ export class BooksListComponent implements OnInit {
   readonly sort = toSignal(this.facade.sort$, { requireSync: true });
   readonly allCollections = toSignal(this.collectionsFacade.allCollections$, { initialValue: [] });
 
+  readonly collectionOptions = computed(() =>
+    this.allCollections().map(c => ({ value: c.id, label: c.name })),
+  );
+
   readonly isEmpty = computed(() => !this.loading() && this.books().length === 0);
   readonly noResults = computed(() => this.isEmpty() && this.allBooks().length > 0);
+
+  readonly yearRangeError = computed(() => {
+    const f = this.filter();
+    return f.yearFrom !== null && f.yearTo !== null && f.yearFrom > f.yearTo
+      ? '"Year from" must be ≤ "Year to"'
+      : null;
+  });
 
   readonly isFilterActive = computed(() => {
     const f = this.filter();
@@ -258,25 +257,19 @@ export class BooksListComponent implements OnInit {
     this.facade.setFilter({ searchTerm });
   }
 
-  onGenreChange(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
+  onGenreChange(value: string): void {
     this.facade.setFilter({ genre: value ? (value as BookGenre) : null });
   }
 
-  onYearFromChange(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-    const year = value !== '' ? parseInt(value, 10) : null;
-    this.facade.setFilter({ yearFrom: year !== null && !isNaN(year) ? year : null });
+  onYearFromChange(value: number | null): void {
+    this.facade.setFilter({ yearFrom: value });
   }
 
-  onYearToChange(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-    const year = value !== '' ? parseInt(value, 10) : null;
-    this.facade.setFilter({ yearTo: year !== null && !isNaN(year) ? year : null });
+  onYearToChange(value: number | null): void {
+    this.facade.setFilter({ yearTo: value });
   }
 
-  onCollectionChange(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
+  onCollectionChange(value: string): void {
     this.facade.setFilter({ collectionId: value || null });
   }
 

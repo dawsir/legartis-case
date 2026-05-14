@@ -11,13 +11,14 @@ import { RouterLink } from '@angular/router';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { BooksFacade } from '../../../books/state/books.facade';
+import { SearchInputComponent } from '../../../../shared/components/search-input/search-input.component';
 import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
 
 @Component({
   selector: 'app-assign-books-panel',
   standalone: true,
-  imports: [RouterLink, LoadingSpinnerComponent, EmptyStateComponent],
+  imports: [RouterLink, SearchInputComponent, LoadingSpinnerComponent, EmptyStateComponent],
   template: `
     <div class="assign-panel">
       <!-- Assigned books -->
@@ -66,12 +67,10 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
           <p class="assign-panel__all-added">All books are already in this collection.</p>
         } @else if (!loading()) {
           <div class="assign-panel__search">
-            <input
-              type="search"
+            <app-search-input
               placeholder="Search by title or author…"
               [value]="searchTerm()"
-              (input)="onSearch($event)"
-              autocomplete="off"
+              (searchChanged)="searchTerm.set($event)"
             />
           </div>
 
@@ -132,10 +131,6 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
 
     .assign-panel__search {
       margin-bottom: 12px;
-    }
-
-    .assign-panel__search input {
-      width: 100%;
       max-width: 400px;
     }
 
@@ -233,10 +228,6 @@ export class AssignBooksPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.booksFacade.loadAll();
-  }
-
-  onSearch(event: Event): void {
-    this.searchTerm.set((event.target as HTMLInputElement).value);
   }
 
   onAssign(bookId: string): void {

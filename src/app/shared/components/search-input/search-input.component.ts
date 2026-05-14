@@ -16,7 +16,9 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule],
   template: `
     <div class="search-input">
-      <label [for]="_id" class="search-input__label">{{ label() }}</label>
+      @if (label()) {
+        <label [for]="_id" class="search-input__label">{{ label() }}</label>
+      }
       <div class="search-input__wrapper">
         <input
           [id]="_id"
@@ -24,6 +26,7 @@ import { FormsModule } from '@angular/forms';
           type="search"
           [placeholder]="placeholder()"
           [value]="value()"
+          [attr.aria-label]="label() || placeholder()"
           (input)="onInput($event)"
           autocomplete="off"
         />
@@ -78,7 +81,7 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchInputComponent implements OnInit, OnDestroy {
-  label = input<string>('Search');
+  label = input<string>('');
   placeholder = input<string>('Search…');
   value = input<string>('');
   debounceMs = input<number>(300);

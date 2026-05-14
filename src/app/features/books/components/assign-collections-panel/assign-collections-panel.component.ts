@@ -12,13 +12,14 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { BooksFacade } from '../../state/books.facade';
 import { CollectionsFacade } from '../../../collections/state/collections.facade';
+import { SearchInputComponent } from '../../../../shared/components/search-input/search-input.component';
 import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
 
 @Component({
   selector: 'app-assign-collections-panel',
   standalone: true,
-  imports: [RouterLink, LoadingSpinnerComponent, EmptyStateComponent],
+  imports: [RouterLink, SearchInputComponent, LoadingSpinnerComponent, EmptyStateComponent],
   template: `
     <div class="assign-panel">
       <!-- Assigned collections -->
@@ -69,12 +70,10 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
           <p class="assign-panel__all-added">This book is already in all collections.</p>
         } @else if (!loading()) {
           <div class="assign-panel__search">
-            <input
-              type="search"
+            <app-search-input
               placeholder="Search collections…"
               [value]="searchTerm()"
-              (input)="onSearch($event)"
-              autocomplete="off"
+              (searchChanged)="searchTerm.set($event)"
             />
           </div>
 
@@ -137,10 +136,6 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
 
     .assign-panel__search {
       margin-bottom: 12px;
-    }
-
-    .assign-panel__search input {
-      width: 100%;
       max-width: 400px;
     }
 
@@ -238,10 +233,6 @@ export class AssignCollectionsPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.collectionsFacade.loadAll();
-  }
-
-  onSearch(event: Event): void {
-    this.searchTerm.set((event.target as HTMLInputElement).value);
   }
 
   onAssign(collectionId: string): void {
