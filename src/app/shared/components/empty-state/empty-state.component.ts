@@ -6,12 +6,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
   template: `
     <div class="empty-state">
       <div class="empty-state__icon" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="7" height="7" rx="1"/>
-          <rect x="14" y="3" width="7" height="7" rx="1"/>
-          <rect x="3" y="14" width="7" height="7" rx="1"/>
-          <rect x="14" y="14" width="7" height="7" rx="1"/>
-        </svg>
+        <img [src]="image()" [alt]="message()" class="empty-state__image">
       </div>
       <p class="empty-state__message">{{ message() }}</p>
       @if (actionLabel()) {
@@ -29,5 +24,6 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 export class EmptyStateComponent {
   message = input<string>('No items found.');
   actionLabel = input<string>('');
+  image = input<string>('/empty.png');
   action = output<void>();
 }

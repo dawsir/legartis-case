@@ -1,8 +1,9 @@
+@use '../styles/variables' as *;
+
 :host {
   display: block;
 }
 
-// Visually hidden but focusable — reveals on keyboard focus
 .skip-link {
   position: absolute;
   left: 50%;
@@ -10,8 +11,8 @@
   transform: translateX(-50%);
   z-index: 9999;
   padding: 8px 20px;
-  background: #3b5bdb;
-  color: #ffffff;
+  background: $color-primary;
+  color: $color-on-primary;
   font-weight: 600;
   font-size: 0.875rem;
   text-decoration: none;
@@ -20,7 +21,7 @@
 
   &:focus {
     top: 0;
-    outline: 2px solid #ffffff;
+    outline: 2px solid $color-on-primary;
     outline-offset: 2px;
   }
 }
@@ -28,10 +29,10 @@
 .app-header {
   position: sticky;
   top: 0;
-  z-index: 200;
-  background: #ffffff;
-  border-bottom: 1px solid #dee2e6;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  z-index: $z-header;
+  background: $color-surface;
+  border-bottom: 1px solid $color-border;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
 
   &__inner {
     display: flex;
@@ -43,22 +44,31 @@
   }
 
   &__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-weight: 700;
     font-size: 18px;
-    color: #1a1a2e;
+    color: $color-primary;
     text-decoration: none;
     flex-shrink: 0;
-    transition: color 150ms ease;
+    transition: color $transition-fast;
 
     &:hover {
-      color: #3b5bdb;
+      color: $color-primary-hover;
     }
 
     &:focus-visible {
-      outline: 2px solid #4263eb;
+      outline: 2px solid $color-focus;
       outline-offset: 3px;
       border-radius: 3px;
     }
+  }
+
+  &__logo {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
   }
 
   &__nav {
@@ -67,28 +77,28 @@
     flex-wrap: nowrap;
 
     a {
-      color: #6c757d;
+      color: $color-text-muted;
       text-decoration: none;
       padding: 6px 12px;
       border-radius: 6px;
       font-weight: 500;
       font-size: 0.9375rem;
-      transition: background 150ms ease, color 150ms ease;
+      transition: background $transition-fast, color $transition-fast;
       white-space: nowrap;
 
       &:hover {
-        color: #1a1a2e;
-        background: #f8f9fa;
+        color: $color-text;
+        background: $color-surface-hover;
       }
 
       &:focus-visible {
-        outline: 2px solid #4263eb;
+        outline: 2px solid $color-focus;
         outline-offset: 2px;
       }
 
       &.is-active {
-        color: #3b5bdb;
-        background: rgba(59, 91, 219, 0.08);
+        color: $color-primary;
+        background: rgba(240, 165, 0, 0.1);
       }
     }
   }

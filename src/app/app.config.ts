@@ -22,6 +22,7 @@ export const appConfig: ApplicationConfig = {
       HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
         dataEncapsulation: false,
         delay: 300,
+        put204: false,
       }),
     ),
     provideStore({ books: booksReducer, collections: collectionsReducer }),

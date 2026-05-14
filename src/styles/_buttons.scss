@@ -30,7 +30,7 @@
 
   &--primary {
     background: $color-primary;
-    color: #ffffff;
+    color: $color-on-primary;
     border-color: $color-primary;
 
     &:hover:not(:disabled) {
@@ -45,8 +45,8 @@
     border-color: $color-border;
 
     &:hover:not(:disabled) {
-      background: $color-background;
-      border-color: #c1c9d0;
+      background: $color-surface-hover;
+      border-color: $color-border;
     }
   }
 
@@ -67,7 +67,7 @@
     border-color: transparent;
 
     &:hover:not(:disabled) {
-      background: $color-background;
+      background: $color-surface;
       color: $color-text;
     }
   }

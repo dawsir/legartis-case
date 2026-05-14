@@ -2,7 +2,10 @@
 
 <header class="app-header">
   <div class="container app-header__inner">
-    <a routerLink="/" class="app-header__brand">Book Collections</a>
+    <a routerLink="/" class="app-header__brand">
+      <img src="/book.png" alt="" class="app-header__logo" aria-hidden="true">
+      Book Collections
+    </a>
     <nav class="app-header__nav" aria-label="Main navigation">
       <a routerLink="/collections" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: false }">Collections</a>
       <a routerLink="/books" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: false }">Books</a>

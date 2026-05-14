@@ -1,15 +1,17 @@
 // Colors
-$color-primary: #3b5bdb;
-$color-primary-hover: #2f4ac4;
+$color-primary: #f0a500;
+$color-primary-hover: #d4901a;
+$color-on-primary: #1a1020;
 $color-danger: #e03131;
 $color-danger-hover: #c92a2a;
 $color-success: #2f9e44;
-$color-text: #1a1a2e;
-$color-text-muted: #6c757d;
-$color-border: #dee2e6;
-$color-surface: #ffffff;
-$color-background: #f8f9fa;
-$color-focus: #4263eb;
+$color-text: #e8d9c0;
+$color-text-muted: #7a6b52;
+$color-border: #211f35;
+$color-surface: #141228;
+$color-surface-hover: #1c1a33;
+$color-background: #0c0b18;
+$color-focus: #f0a500;
 
 // Spacing
 $spacing-xs: 4px;
@@ -25,9 +27,9 @@ $border-radius: 8px;
 $border-radius-lg: 12px;
 
 // Shadows
-$shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
-$shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
-$shadow-dialog: 0 20px 60px rgba(0, 0, 0, 0.2);
+$shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4);
+$shadow-elevated: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(240, 165, 0, 0.12);
+$shadow-dialog: 0 20px 60px rgba(0, 0, 0, 0.8);
 
 // Typography
 $font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;

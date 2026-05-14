@@ -8,14 +8,18 @@ import { RouterLink } from '@angular/router';
   imports: [RouterLink],
   template: `
     <section class="not-found container">
-      <div class="not-found__code" aria-hidden="true">404</div>
+      <img src="/404.png" alt="404 - Page not found" class="not-found__image" />
       <h1 class="not-found__title">Page not found</h1>
-      <p class="not-found__message">The page you are looking for does not exist or has been moved.</p>
+      <p class="not-found__message">
+        The page you are looking for does not exist or has been moved.
+      </p>
       <a routerLink="/collections" class="btn btn--primary">Back to Collections</a>
     </section>
   `,
   styles: `
-    :host { display: block; }
+    :host {
+      display: block;
+    }
 
     .not-found {
       display: flex;
@@ -27,25 +31,21 @@ import { RouterLink } from '@angular/router';
       padding-bottom: 80px;
     }
 
-    .not-found__code {
-      font-size: 6rem;
-      font-weight: 800;
-      line-height: 1;
-      color: #dee2e6;
-      margin-bottom: 16px;
-      letter-spacing: -2px;
+    .not-found__image {
+      width: 350px;
+      height: auto;
     }
 
     .not-found__title {
       font-size: 1.75rem;
       font-weight: 700;
       margin-bottom: 12px;
-      color: #1a1a2e;
+      color: #e8d9c0;
     }
 
     .not-found__message {
       font-size: 1rem;
-      color: #6c757d;
+      color: #7a6b52;
       margin-bottom: 32px;
       max-width: 400px;
     }
