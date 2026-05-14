@@ -315,7 +315,7 @@ Validation messages appear inline on each field once it has been **touched**. Su
 
 ---
 
-## Future improvements
+## Ideas how to improve app
 
 - **Optimistic UI** for assign/unassign operations — update state immediately, roll back on failure.
 - **Pagination or virtual scrolling** for the book/collection lists — currently loads all entities at once.
