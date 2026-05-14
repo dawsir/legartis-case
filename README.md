@@ -137,8 +137,15 @@ src/
         collections.routes.ts
       not-found/
     shared/
-      components/        # ConfirmDialogComponent, EmptyStateComponent, LoadingSpinnerComponent,
-                         # ErrorMessageComponent, SearchInputComponent, SortSelectComponent
+      components/
+        search-input/        # SearchInputComponent — debounced search field with × clear button
+        filter-number-input/ # FilterNumberInputComponent — number field with × between text and spinners
+        filter-select/       # FilterSelectComponent — select with × left of chevron arrow
+        sort-select/         # SortSelectComponent — property + direction toggle
+        confirm-dialog/      # ConfirmDialogComponent — destructive-action confirmation modal
+        empty-state/         # EmptyStateComponent — zero-result placeholder with icon
+        loading-spinner/     # LoadingSpinnerComponent
+        error-message/       # ErrorMessageComponent — retry-able error banner
       models/            # Book, BookCollection, view-models, filters, BookGenre enum
       pipes/             # TruncatePipe
     app.ts               # App shell (header + router-outlet)
@@ -151,6 +158,23 @@ src/
     _cards.scss, _layout.scss, _dialogs.scss, _empty-state.scss, _loading.scss
     styles.scss          # Entry point — @use all partials
 ```
+
+### Shared input components
+
+All interactive filter controls live in `src/app/shared/components/` and are reused across every feature that needs filtering or search.
+
+| Component | Selector | Purpose |
+|---|---|---|
+| `SearchInputComponent` | `<app-search-input>` | Text search with debounce (default 300 ms) and a × clear button. Label is optional — when omitted the input falls back to `aria-label` for accessibility. Used in the books list, collections list, and both assign panels. |
+| `FilterNumberInputComponent` | `<app-filter-number-input>` | Number field for range filters. The × clear button is positioned **between** the typed value and the browser's native spin buttons so neither overlaps. Accepts a `hasError` boolean for cross-field validation styling (red border + focus ring). |
+| `FilterSelectComponent` | `<app-filter-select>` | Select field that renders a typed `options` array. The × clear button sits **left of the chevron arrow** so both remain clickable. Emits `''` when cleared, matching the "all" empty-option value. |
+| `SortSelectComponent` | `<app-sort-select>` | Combines a sort-property select with an asc/desc direction toggle into a single output event. |
+
+All three filter components:
+- Are standalone with `ChangeDetectionStrategy.OnPush`
+- Use `input()` / `output()` signal API — no `@Input()` / `@Output()` decorators
+- Auto-generate an accessible `id` (overridable via `inputId` input) and associate it to the label via `[for]`
+- Contain their own wrapper + positioning styles — consumers need no CSS to make the × appear correctly
 
 ### Data flow
 
@@ -259,7 +283,7 @@ interface BookCollection {
 | Author | Required, max 100 characters |
 | Genre | Required (select from `BookGenre` enum) |
 | Year | Required, min −3000, max current year |
-| ISBN | Optional, no validation |
+| ISBN | Optional; when provided must be exactly 10 digits (ISBN-10, last digit may be `X`) or 13 digits (ISBN-13, no hyphens) — validated via `Validators.pattern(/^(?:\d{9}[\dX]|\d{13})$/)` |
 | Description | Optional, max 1000 characters |
 
 ### Collection form
@@ -268,6 +292,10 @@ interface BookCollection {
 |---|---|
 | Name | Required, max 80 characters |
 | Description | Optional, max 500 characters |
+
+### Year-range cross-field validation (books list filter)
+
+The "Year from" and "Year to" filter inputs use `FilterNumberInputComponent` and are validated together as a group: if both values are set and `yearFrom > yearTo`, both inputs receive a red border and an error message is shown below the pair — `"Year from" must be ≤ "Year to"`. The filter still dispatches to the store (producing zero results is the natural consequence of an inverted range); no silent state mutation occurs.
 
 Validation messages appear inline on each field once it has been **touched**. Submitting an invalid form marks all controls as touched to reveal all errors at once. The submit button is disabled while the form status is not `VALID`.
 
