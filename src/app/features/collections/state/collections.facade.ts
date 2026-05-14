@@ -17,6 +17,10 @@ import {
   selectCollectionsSort,
   selectFilteredAndSortedCollections,
 } from './collections.selectors';
+import {
+  selectBooksForCollection,
+  selectAvailableBooksForCollection,
+} from '../../books/state/books.selectors';
 
 @Injectable({ providedIn: 'root' })
 export class CollectionsFacade {
@@ -36,6 +40,14 @@ export class CollectionsFacade {
 
   getViewModelById(id: string) {
     return this.store.select(selectCollectionViewModelById(id));
+  }
+
+  getBooksForCollection$(id: string) {
+    return this.store.select(selectBooksForCollection(id));
+  }
+
+  getAvailableBooks$(id: string) {
+    return this.store.select(selectAvailableBooksForCollection(id));
   }
 
   loadAll(): void {

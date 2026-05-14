@@ -10,7 +10,7 @@ import { input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
-import { BooksFacade } from '../../../books/state/books.facade';
+import { BooksFacade } from '../../state/books.facade';
 import { CollectionsFacade } from '../../../collections/state/collections.facade';
 import { LoadingSpinnerComponent } from '../../../../shared/components/loading-spinner/loading-spinner.component';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
@@ -213,27 +213,17 @@ export class AssignCollectionsPanelComponent implements OnInit {
 
   private readonly id$ = toObservable(this.bookId);
 
-  readonly book = toSignal(
-    this.id$.pipe(switchMap(id => this.booksFacade.getById(id))),
+  readonly assigned = toSignal(
+    this.id$.pipe(switchMap(id => this.booksFacade.getBookCollections$(id))),
+    { initialValue: [] },
   );
 
-  readonly allCollections = toSignal(this.collectionsFacade.allCollections$, {
-    initialValue: [],
-  });
+  readonly available = toSignal(
+    this.id$.pipe(switchMap(id => this.booksFacade.getAvailableCollections$(id))),
+    { initialValue: [] },
+  );
 
   readonly loading = toSignal(this.collectionsFacade.loading$, { initialValue: true });
-
-  readonly assigned = computed(() => {
-    const b = this.book();
-    if (!b) return [];
-    return this.allCollections().filter(c => b.collectionIds.includes(c.id));
-  });
-
-  readonly available = computed(() => {
-    const b = this.book();
-    if (!b) return [];
-    return this.allCollections().filter(c => !b.collectionIds.includes(c.id));
-  });
 
   readonly assignedCount = computed(() => this.assigned().length);
   readonly availableCount = computed(() => this.available().length);

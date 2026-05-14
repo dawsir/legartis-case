@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { CollectionViewModel } from '../../../shared/models/view-models';
-import { selectAllBooks } from '../../books/state/books.selectors';
+import { selectAllBooks, selectBookEntities } from '../../books/state/books.selectors';
 import { CollectionsState, selectAll, selectEntities } from './collections.reducer';
 
 export const selectCollectionsState = createFeatureSelector<CollectionsState>('collections');
@@ -55,3 +55,17 @@ export const selectFilteredAndSortedCollections = createSelector(
 
 export const selectCollectionViewModelById = (id: string) =>
   createSelector(selectCollectionViewModels, collections => collections.find(c => c.id === id));
+
+export const selectBookCollections = (bookId: string) =>
+  createSelector(selectBookEntities, selectAllCollections, (bookEntities, collections) => {
+    const book = bookEntities[bookId];
+    if (!book) return [];
+    return collections.filter(c => book.collectionIds.includes(c.id));
+  });
+
+export const selectAvailableCollectionsForBook = (bookId: string) =>
+  createSelector(selectBookEntities, selectAllCollections, (bookEntities, collections) => {
+    const book = bookEntities[bookId];
+    if (!book) return collections;
+    return collections.filter(c => !book.collectionIds.includes(c.id));
+  });

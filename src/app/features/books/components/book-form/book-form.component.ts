@@ -99,9 +99,12 @@ interface BookFormShape {
           id="book-isbn"
           type="text"
           formControlName="isbn"
-          placeholder="e.g. 978-3-16-148410-0"
+          placeholder="e.g. 9783161484100"
           autocomplete="off"
         />
+        @if (form.controls.isbn.invalid && form.controls.isbn.touched) {
+          <span class="form-error">ISBN must be 10 or 13 digits (no hyphens).</span>
+        }
       </div>
 
       <!-- Description -->
@@ -174,7 +177,9 @@ export class BookFormComponent {
         Validators.max(new Date().getFullYear()),
       ],
     }),
-    isbn: new FormControl<string | null>(null),
+    isbn: new FormControl<string | null>(null, [
+      Validators.pattern(/^(?:\d{9}[\dX]|\d{13})$/),
+    ]),
     description: new FormControl<string | null>(null, [Validators.maxLength(1000)]),
     collectionIds: new FormControl<string[]>([], { nonNullable: true }),
   });
